@@ -1,0 +1,51 @@
+--  Assumes default location of GtkAda; also allows for conditional linking
+
+project GtkAda_Conditional is
+
+   type Yes_No is ("Yes", "No");
+
+   Include_Core : Yes_No := External ("GtkAda_Include_Core", "No");
+
+   case Include_Core is
+      when "Yes" =>
+         for Source_Dirs use ("/usr/local/include/gtkada");
+         for Source_List_File use "/usr/local/lib/gnat/gtkada/gtkada.lgpr";
+         for Library_Dir use "/usr/local/lib/gtkada";
+         for Library_Kind use "relocatable";
+         for Library_Name use "gtkada";
+         for Externally_Built use "true";
+      when "No" =>
+         for Source_Dirs use ();
+   end case;
+
+   package Linker is
+      case Include_Core is
+         when "Yes" =>
+            for Linker_Options use (
+                "-L/usr/local/lib/gtkada",
+                "-lgtk-x11-2.0",
+                "-lgdk-x11-2.0",
+                "-latk-1.0",
+                "-lgdk_pixbuf-2.0",
+                "-lm",
+                "-lpangocairo-1.0",
+                "-lfontconfig",
+                "-lXext",
+                "-lXrender",
+                "-lXinerama",
+                "-lXi",
+                "-lXrandr",
+                "-lXcursor",
+                "-lXfixes",
+                "-lpango-1.0",
+                "-lcairo",
+                "-lX11",
+                "-lgobject-2.0",
+                "-lgmodule-2.0",
+                "-ldl",
+                "-lglib-2.0");
+         when "No" =>
+            null;
+      end case;
+   end Linker;
+end GtkAda_Conditional;

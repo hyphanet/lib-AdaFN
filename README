@@ -1,0 +1,16 @@
+This is an Ada library implementing the FCP2 protocol for communication with a freenet node.
+
+This library is developed with GNAT and this instructions are specific for that compiler.
+
+Usage: with the adafn.gpr project file in your own project file.
+
+Alternatively: issue
+
+   make 
+to build the example executables (tests folder).
+
+   make lib
+to build a statically linkable library.
+
+Tested works with gnat-gpl-2007
+Tested does not work with gnat-4.1/4.2 (Preelaborable_Initialization pragma still unimplemented in gnat).

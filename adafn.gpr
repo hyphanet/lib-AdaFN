@@ -1,0 +1,106 @@
+with "agpl/agpl";
+
+project AdaFN is
+
+   type Boolean          is ("True",    "False");
+   type Enabled_Disabled is ("Enabled", "Disabled");
+   type Yes_No           is ("Yes",     "No");
+
+   Lib_Name    := "adafn";
+   Lib_Version := "20080324";
+
+   for Object_Dir use "obj";
+   for Source_Dirs use ();
+
+   for Languages use ("Ada");
+
+   type Build_Type   is ("Debug", "Release", "No_Options", "Profile");
+   type Linking_Type is ("Dependencies", "Static_Library", "Dynamic_Library");
+
+   Build : Build_Type   := external ("AdaFN_Build", "Debug");
+   Link  : Linking_Type := External ("AdaFN_Link",  "Dependencies");
+
+   case Link is
+      when "Dependencies" =>
+         null;
+      when "Static_Library" =>
+         for Library_Dir     use "libstatic";
+         for Library_Name    use Lib_Name;
+         for Library_Kind    use "Static";
+         for Library_Version use Lib_Name & ".a." & Lib_Version;
+      when "Dynamic_Library" =>
+         for Library_Dir     use "libdynamic";
+         for Library_Name    use Lib_Name;
+         for Library_Kind    use "Dynamic";
+         for Library_Version use Lib_Name & ".so." & Lib_Version;
+   end case;
+
+   Include_Core : Yes_No := external ("AdaFN_Include_Core", "Yes");
+   Include_Main : Yes_No := external ("AdaFN_Include_Main", "Yes");
+
+   case Include_Core is
+      when "Yes" => for Source_Dirs use ("src");
+      when "No"  => null;
+   end case;
+
+   case Include_Main is
+      when "Yes" => for Source_Dirs use project'Source_Dirs & "src/main";
+      when "No"  => null;
+   end case;
+
+   package Ide is
+      for Vcs_Kind use "Subversion";
+   end Ide;
+
+   package Compiler is
+      for Default_Switches ("C")   use ("-g", "-Wall", "-O2");
+      for Default_Switches ("C++") use ("-g", "-Wall", "-O2");
+      for Default_Switches ("Ada") use ("-g", "-gnatf", "-gnat05", "-gnatwcfjklmopruvz", "-gnatyacehikn", "-gnatqQ");
+
+      case Build is
+         when "Profile" =>
+            for Default_Switches ("Ada") use Compiler'Default_Switches ("Ada") &
+              ("-O2", "-gnato", "-fstack-check", "-gnata", "-gnatpg");
+         when "Debug" =>
+            for Default_Switches ("Ada") use Compiler'Default_Switches ("Ada") &
+              ("-O2", "-gnato", "-fstack-check", "-gnata");
+         when "Release" =>
+            for Default_Switches ("Ada") use Compiler'Default_Switches ("Ada") & ("-O3", "-gnatn", "-gnatN");
+            for Default_Switches ("C")   use Compiler'Default_Switches ("C")   & ("-O3");
+            for Default_Switches ("C++") use Compiler'Default_Switches ("C")   & ("-O3");
+         when "No_Options" =>
+            for Default_Switches ("Ada") use ("-gnat05");
+            --  Deliberately override default switches not to have any!
+      end case;
+   end Compiler;
+
+   package Binder is
+      for Default_Switches ("Ada") use ("-E", "-g");
+   end Binder;
+
+   package Linker is
+      for Default_Switches ("Ada") use ("-g", "-Wl,--gc-sections");
+      for Default_Switches ("C")   use ("-g");
+      for Default_Switches ("C++") use ("-g");
+   end Linker;
+
+   package Builder is
+      for Default_Switches ("Ada") use ("-g");
+   end Builder;
+
+   package Pretty_Printer is
+      for Default_Switches ("Ada") use ("-A1", "-A2", "-A3", "-A4");
+   end Pretty_Printer;
+
+   package Naming is
+      for Specification_Suffix  ("C") use ".h";
+      for Implementation_Suffix ("C") use ".c";
+      for Specification_Suffix  ("C++") use ".hh";
+      for Implementation_Suffix ("C++") use ".cpp";
+      for Implementation_Suffix ("C++") use ".cc";
+      for Specification_Suffix  ("Changelog") use "changelog";
+      for Specification_Suffix  ("Project file") use ".gpr";
+      for Specification_Suffix  ("Python") use ".py";
+   end Naming;
+
+end AdaFN;

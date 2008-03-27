@@ -1,0 +1,32 @@
+2008 02 04
+----------
+[+] Agpl.Containers.Trees (N-Trees)
+
+2007 12 07
+----------
+[+] Added zlib_ada and png_io as support 3rd libraries
+
+2006 06 01
+----------
+[+] Modified Agpl.Cr.Cost para que incluya la No_Task (Id = 0) cuando se creen costes desde starting task.
+[+] Implemented Agpl.Cr.Mutable_Assignment.Reevaluate_*
+
+2006 06 02
+----------
+[+] Agpl.Cr.Agent.Dummy
+
+2006 06 05
+----------
+[+] Mutable_Assignment compiles (doesn't work).
+
+-- 20050408 --
+--------------
+[+] Drawers for the autoscaling Agpl.Gdk.Drawer.
+
+-- 20050407 --
+--------------
+[+] A lot of utilities for Gdk, including a nice autoscaling object.
+
+-- 20050404 --
+--------------
+[+] Agpl.Cv. Package for homogenous basic points and lines in 2D.
