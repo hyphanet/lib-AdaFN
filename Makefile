@@ -1,27 +1,27 @@
 .PHONY: all lib clean
 
-PARAMS=-XHungarian_Include_Base=No -XAgpl_Include_PngIO=No -XAgpl_Include_Boost=No -XAgpl_Include_Concorde=No
+PARAMS=-XHungarian_Include_Base=False -XAgpl_Include_PngIO=False -XAgpl_Include_Boost=False -XAgpl_Include_Concorde=False
 
 PARAMSBIN=${PARAMS} -Padafn -XAdaFN_Link=Dependencies
 
 PARAMSLIB=${PARAMS} -Padafn -XAdaFN_Link=Static_Library
 
 all:
-	gprmake ${PARAMSBIN} adafn_getkey
-	gprmake ${PARAMSBIN} adafn_putfile
-	gprmake ${PARAMSBIN} adafn_putdir
-	gprmake ${PARAMSBIN} adafn_test
+	gprbuild ${PARAMSBIN} adafn_getkey
+	gprbuild ${PARAMSBIN} adafn_putfile
+	gprbuild ${PARAMSBIN} adafn_putdir
+	gprbuild ${PARAMSBIN} adafn_test
 
 lib:
 	# NOTE: you don't need to build the library. Just "with" the project file in your project and choose the appropriate linking type.
 	# This makefile is provided only as a way to check the build and build the utils
 	#
-	# gprmake builds the C and C++ files
+	# gprbuild builds the C and C++ files
 	#
-	gprmake ${PARAMSLIB}
+	gprbuild ${PARAMSLIB}
 	#
 	# gnatmake builds all the Ada files and does the linking
-	# I think gprmake should do this too, since it does when a main procedure is specified. Bug?
+	# I think gprbuild should do this too, since it does when a main procedure is specified. Bug?
 	#
 	gnatmake ${PARAMSLIB}
 
