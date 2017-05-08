@@ -1,0 +1,3 @@
+[submodule "agpl"]
+	path = agpl
+	url = https://github.com/mosteo/agpl
