@@ -7,6 +7,7 @@ PARAMSBIN=${PARAMS} -Padafn -XAdaFN_Link=Dependencies
 PARAMSLIB=${PARAMS} -Padafn -XAdaFN_Link=Static_Library
 
 all:
+	mkdir -p obj agpl/obj
 	gprbuild ${PARAMSBIN} adafn_getkey
 	gprbuild ${PARAMSBIN} adafn_putfile
 	gprbuild ${PARAMSBIN} adafn_putdir
