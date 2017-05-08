@@ -1,4 +1,4 @@
-This is an Ada library implementing the FCP2 protocol for communication with a freenet node.
+This is an Ada library implementing the [FCPv2](https://github.com/freenet/wiki/wiki/FCPv2) protocol for communication with a freenet node.
 
 This library is developed with GNAT and this instructions are specific for that compiler.
 
