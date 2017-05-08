@@ -2,6 +2,14 @@ This is an Ada library implementing the FCP2 protocol for communication with a f
 
 This library is developed with GNAT and this instructions are specific for that compiler.
 
+Clone with the "--recursive" switch to pull in the agpl submodule:
+
+    git clone --recursive https://github.com/freenet/lib-AdaFN
+
+Building requires the GNU Scientific Library. For `apt` package manager this is:
+
+    sudo apt-get install libgsl-dev
+
 Usage: with the adafn.gpr project file in your own project file.
 
 Alternatively: issue
@@ -12,5 +20,7 @@ to build the example executables (tests folder).
    make lib
 to build a statically linkable library.
 
-Tested works with gnat-gpl-2007
+Binary executables are placed in the `obj` folder.
+
+Tested works with gnat-gpl-2016
 Tested does not work with gnat-4.1/4.2 (Preelaborable_Initialization pragma still unimplemented in gnat).
